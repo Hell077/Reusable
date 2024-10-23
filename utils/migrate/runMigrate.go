@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func RunMigrate() error {
+func RunMigrate(path string) error {
 	dbName := os.Getenv("DB_NAME")
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
@@ -15,7 +15,7 @@ func RunMigrate() error {
 	dbPort := os.Getenv("DB_PORT")
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", dbUser, dbPassword, dbHost, dbPort, dbName)
-	cmd := exec.Command("migrate", "-database", dsn, "-path", "./migrations", "up")
+	cmd := exec.Command("migrate", "-database", dsn, "-path", path, "up")
 
 	out, err := cmd.CombinedOutput()
 	if err != nil {
