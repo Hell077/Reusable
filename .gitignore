@@ -1,0 +1,14 @@
+.idea/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.log
+*.tmp
+*.swp
+*.swo
+*.DS_Store
+*.env
+bin/
+build/
