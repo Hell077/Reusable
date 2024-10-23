@@ -1,4 +1,4 @@
-package runMigrate
+package migrate
 
 import (
 	"fmt"
