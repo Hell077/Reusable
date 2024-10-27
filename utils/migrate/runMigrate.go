@@ -31,27 +31,31 @@ import (
 )
 
 func findMigrationFolder(folderName string) (string, error) {
-	log.Printf("Searching for migration folder: %s", folderName)
-	var folderPath string
-	err := filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			log.Printf("Error during file walk: %v", err)
-			return err
-		}
-		if info.IsDir() && strings.Contains(path, folderName) {
-			folderPath = path
-			log.Printf("Migration folder found at: %s", folderPath)
-			return filepath.SkipDir
-		}
-		return nil
-	})
-	if err != nil {
-		return "", err
-	}
-	if folderPath == "" {
-		return "", fmt.Errorf("folder %s not found", folderName)
-	}
-	return folderPath, nil
+    log.Printf("Searching for migration folder: %s", folderName)
+    var folderPath string
+    err := filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
+        if err != nil {
+            log.Printf("Error during file walk: %v", err)
+            return err
+        }
+        log.Printf("Checking path: %s", path) // Лог для отладки
+        if strings.Contains(path, "proc") {
+            return filepath.SkipDir
+        }
+        if info.IsDir() && strings.Contains(path, folderName) {
+            folderPath = path
+            log.Printf("Migration folder found at: %s", folderPath)
+            return filepath.SkipDir
+        }
+        return nil
+    })
+    if err != nil {
+        return "", err
+    }
+    if folderPath == "" {
+        return "", fmt.Errorf("folder %s not found", folderName)
+    }
+    return folderPath, nil
 }
 
 func Run(folderName string) {
